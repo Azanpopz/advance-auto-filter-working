@@ -56,7 +56,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    'ᴏᴡɴᴇʀ', url="https://t.munnipopz"
+                                    'ᴏᴡɴᴇʀ', url="https://t.me/munnipopz"
                                 )
                         ]
                     ]
