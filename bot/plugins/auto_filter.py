@@ -15,8 +15,8 @@ INVITE_LINK = {}
 ACTIVE_CHATS = {}
 db = Database()
 
-@Bot.on_message(filters.text & filters.group & ~filters.bot, group=0)
-async def auto_filter(bot, update):
+@Bot.on_message(filters.text & filters.group & ~filters.edited, group=0)
+async def auto_filter(bot: Client, update: Message):
     """
     A Funtion To Handle Incoming Text And Reply With Appropriate Results
     """
@@ -28,7 +28,9 @@ async def auto_filter(bot, update):
     if ("https://" or "http://") in update.text:
         return
     
-    query = re.sub(r"[1-2]\d{3}", "", update.text) # Targetting Only 1000 - 2999 😁
+    # Targetting Only 1000 - 2999 to remove from search query..!
+    # Make the below line as: query = update.text to make year too in search query..!
+    query = re.sub(r"[1-2]\d{3}", "", update.text) 
     
     if len(query) < 2:
         return
@@ -55,41 +57,35 @@ async def auto_filter(bot, update):
     max_per_page = configs["configs"]["max_per_page"] # maximum buttom per page 
     show_invite = configs["configs"]["show_invite_link"] # should or not show active chat invite link
     
-    show_invite = (False if pm_file_chat == True else show_invite) # turn show_invite to False if pm_file_chat is True
+    # show_invite = (False if pm_file_chat == True else show_invite) # turn show_invite to False if pm_file_chat is True
     
     filters = await db.get_filters(group_id, query)
     
     if filters:
-        results.append(
-                [
-                    InlineKeyboardButton("🔘 ᴊᴏɪɴ ᴏᴜʀ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟʜᴀɴɴᴇʟ 🔘", url="https://t.me/mazhatthullikal")
-                ]
-            )
         for filter in filters: # iterating through each files
             file_name = filter.get("file_name")
             file_type = filter.get("file_type")
             file_link = filter.get("file_link")
-            file_size = int(filter.get("file_size", ""))
-            file_size = round((file_size/1024),2) # from B to KB
-            size = ""
-            file_KB = ""
-            file_MB = ""
-            file_GB = ""
+            file_size = int(filter.get("file_size", "0"))
+            
+            # from B to MiB
             
             if file_size < 1024:
-                file_KB = f"𝚂𝚞𝚋𝚝𝚒𝚝𝚕𝚎"
-                size = file_KB
-            elif file_size < (1024*1024):
-                file_MB = f"📂 {str(round((file_size/1024),2))} 𝙼ʙ"
-                size = file_MB
-            else:
-                file_GB = f"📂 {str(round((file_size/(1024*1024)),2))} 𝙶ʙ"
-                size = file_GB
-                
-            file_names = file_name
-            file_size = size
-            print(file_name)
-
+                file_size = f"[{file_size} B]"
+            elif file_size < (1024**2):
+                file_size = f"[{str(round(file_size/1024, 2))} KB] "
+            elif file_size < (1024**3):
+                file_size = f"[{str(round(file_size/(1024**2), 2))} MB] "
+            elif file_size < (1024**4):
+                file_size = f"[{str(round(file_size/(1024**3), 2))} GB] "
+            
+            
+            file_size = "" if file_size == ("[0 B]") else file_size
+            
+            # add emoji down below inside " " if you want..
+            button_text = f" 🎬{file_size} 🗂️{file_name}"
+            
+            
             if file_type == "video":
                 if allow_video: 
                     pass
@@ -125,10 +121,11 @@ async def auto_filter(bot, update):
                 bot_ = FIND.get("bot_details")
                 file_link = f"https://t.me/{bot_.username}?start={unique_id}"
             
-            results.append([
-            InlineKeyboardButton(file_names, url=file_link),
-            InlineKeyboardButton(file_size, url=file_link)
-        ])
+            results.append(
+                [
+                    InlineKeyboardButton(button_text, url=file_link)
+                ]
+            )
         
     else:
         return # return if no files found for that query
@@ -152,7 +149,7 @@ async def auto_filter(bot, update):
         if len_result != 1:
             result[0].append(
                 [
-                    InlineKeyboardButton("Next ⏩", callback_data=f"navigate(0|next|{query})")
+                    InlineKeyboardButton("👉GO TO NEXT PAGE👈", callback_data=f"navigate(0|next|{query})")
                 ]
             )
         
@@ -198,8 +195,9 @@ async def auto_filter(bot, update):
                 
             for x in ibuttons:
                 result[0].insert(0, x) #Insert invite link buttons at first of page
-                
-            ibuttons = None # Free Up Memory...
+            
+            # Free Up Memory...
+            ibuttons = None
             achatId = None
             
             
@@ -208,7 +206,7 @@ async def auto_filter(bot, update):
         try:
             await bot.send_message(
                 chat_id = update.chat.id,
-                text=f"Found {(len_results)} Results For Your Query: <code>{query}</code>",
+                text=f"Found {(len_results)} Results For Your Requst: <code>{query}</code>",
                 reply_markup=reply_markup,
                 parse_mode="html",
                 reply_to_message_id=update.message_id
