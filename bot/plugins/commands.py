@@ -23,9 +23,9 @@ async def start(bot, update):
         except UserNotParticipant:
             #await update.reply_text(f"Join @{update_channel} To Use Me")
             await update.reply_text(
-                text="<b>🤭 HEY DUDE JOIN OUR MAIN CHANNEL TO USE ME DONT LEFT THE CHANNEL AFTER THE USE OF YOU MAY BE IT WOULD BE A MISBEHAVE TO ME🤔</b>",
+                text="<b>🤭 ʜᴇʏ ᴅᴜᴅᴇ ᴊᴏɪɴ ᴏᴜʀ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ ᴛᴏ ᴜꜱᴇ ᴍᴇ ᴅᴏɴᴛ ʟᴇꜰᴛ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ᴀꜰᴛᴇʀ ᴛʜᴇ ᴜꜱᴇ ᴏꜰ ʏᴏᴜ ᴍᴀʏ ʙᴇ ɪᴛ ᴡᴏᴜʟᴅ ʙᴇ ᴀ ᴍɪꜱʙᴇʜᴀᴠᴇ ᴛᴏ ᴍᴇ🤔</b>",
                 reply_markup=InlineKeyboardMarkup([
-                    [ InlineKeyboardButton(text=" 🔻JOIN OUR CHANNEL🔺 ", url=f"https://t.me/{update_channel}")]
+                    [ InlineKeyboardButton(text=" 🔓ᴊᴏɪɴ ᴏᴜʀ ᴄʜᴀɴɴᴇʟ🔓 ", url=f"https://t.me/{update_channel}")]
               ])
             )
             return
@@ -56,7 +56,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    'Developers', url="https://t.me/CrazyBotsz"
+                                    'ᴏᴡɴᴇʀ', url="https://t.munnipopz"
                                 )
                         ]
                     ]
@@ -68,11 +68,11 @@ async def start(bot, update):
         return
 
     buttons = [[
-        InlineKeyboardButton('CHANNEL', url='https://t.me/CrazyBotsz'),
-        InlineKeyboardButton('GROUP', url ='https://github.com/CrazyBotsz/Adv-Auto-Filter-Bot-V2')
+        InlineKeyboardButton('ᴄʜᴀɴɴᴇʟ', url='https://t.me/movieslokam2'),
+        InlineKeyboardButton('ɢʀᴏᴜᴘ', url='https://t.me/mazhatthullikal')
     ],[
-        InlineKeyboardButton('HELP🧐', callback_data="help"), 
-        InlineKeyboardButton('CLOSE🔐', callback_data='close')
+        InlineKeyboardButton('ʜᴇʟᴘ🧐', callback_data="help"), 
+        InlineKeyboardButton('ᴄʟᴏꜱᴇ', callback_data='close')
     ]]
     
     reply_markup = InlineKeyboardMarkup(buttons)
@@ -90,10 +90,10 @@ async def start(bot, update):
 @Client.on_message(filters.command(["help"]) & filters.private, group=1)
 async def help(bot, update):
     buttons = [[
-        InlineKeyboardButton('Home ⚡', callback_data='start'),
-        InlineKeyboardButton('About 🚩', callback_data='about')
+        InlineKeyboardButton('ʜᴏᴍᴇ ', callback_data='start'),
+        InlineKeyboardButton('ᴀʙᴏᴜᴛ ', callback_data='about')
     ],[
-        InlineKeyboardButton('Close 🔐', callback_data='close')
+        InlineKeyboardButton('ᴄʟᴏꜱᴇ ', callback_data='close')
     ]]
     
     reply_markup = InlineKeyboardMarkup(buttons)
@@ -111,8 +111,8 @@ async def help(bot, update):
 async def about(bot, update):
     
     buttons = [[
-        InlineKeyboardButton('Home ⚡', callback_data='start'),
-        InlineKeyboardButton('Close 🔐', callback_data='close')
+        InlineKeyboardButton('ʜᴏᴍᴇ', callback_data='start'),
+        InlineKeyboardButton('ᴄʟᴏꜱᴇ', callback_data='close')
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
     
