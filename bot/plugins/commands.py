@@ -71,7 +71,7 @@ async def start(bot, update):
         InlineKeyboardButton('ᴄʜᴀɴɴᴇʟ', url='https://t.me/movieslokam2'),
         InlineKeyboardButton('ɢʀᴏᴜᴘ', url='https://t.me/mazhatthullikal')
     ],[
-        InlineKeyboardButton('ʜᴇʟᴘ🧐', callback_data="help"), 
+        InlineKeyboardButton('ʜᴇʟᴘ🧐', callback_data="close"), 
         InlineKeyboardButton('ᴄʟᴏꜱᴇ', callback_data='close')
     ]]
     
